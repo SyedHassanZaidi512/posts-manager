@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
-
+import Form from "./Form";
 function EditBox({ open, setOpen, submitForm, ePost }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -17,42 +17,43 @@ function EditBox({ open, setOpen, submitForm, ePost }) {
   }, [ePost]);
 
   return (
-    <div>
-      <Dialog key={ePost.id} open={ePost ? open : false}>
-        <DialogTitle>Edit</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="title"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+     <Form title={title} setTitle={setTitle} body={body} setBody={setBody} open={open} setOpen={setOpen}/>
+    // <div>
+    //   <Dialog key={ePost.id} open={ePost ? open : false}>
+    //     <DialogTitle>Edit</DialogTitle>
+    //     <DialogContent>
+    //       <TextField
+    //         autoFocus
+    //         margin="dense"
+    //         id="name"
+    //         label="title"
+    //         type="text"
+    //         fullWidth
+    //         variant="standard"
+    //         value={title}
+    //         onChange={(e) => setTitle(e.target.value)}
+    //       />
 
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Body"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={() => submitForm(title, body, ePost.id)}>
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    //       <TextField
+    //         autoFocus
+    //         margin="dense"
+    //         id="name"
+    //         label="Body"
+    //         type="text"
+    //         fullWidth
+    //         variant="standard"
+    //         value={body}
+    //         onChange={(e) => setBody(e.target.value)}
+    //       />
+    //     </DialogContent>
+    //     <DialogActions>
+    //       <Button onClick={() => setOpen(false)}>Cancel</Button>
+    //       <Button onClick={() => submitForm(title, body, ePost.id)}>
+    //         Submit
+    //       </Button>
+    //     </DialogActions>
+    //   </Dialog>
+    // </div>
   );
 }
 
