@@ -17,10 +17,9 @@ function App() {
   const [ePost, setEPost] = useState("");
   const [open, setOpen] = useState(false);
   const [addForm, setAddForm] = useState(false);
-  const [editTitle, setEditTitle] = useState("");
-  const [editBody, setEditBody] = useState("");
-  const [addTitle, setAddTitle] = useState("");
-  const [addBody, setAddBody] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  
 
   useEffect(() => {
     getPosts();
@@ -38,8 +37,8 @@ function App() {
   const submitAddForm = (title, body) => {
     const post = { id: posts.length + 1, title: title, body: body };
     setPosts([...posts, post]);
-    setAddTitle("")
-    setAddBody("")
+    setBody("")
+    setTitle("")
     setAddForm(false);
   };
 
@@ -103,6 +102,8 @@ function App() {
     });
     setPosts(newArray);
     setAdd(editAdd);
+    setBody("")
+    setTitle("")
     setOpen(false);
   };
 
@@ -118,10 +119,10 @@ function App() {
                 <Form
                   open={addForm}
                   setOpen={setAddForm}
-                  title={addTitle}
-                  setTitle={setAddTitle}
-                  body={addBody}
-                  setBody={setAddBody}
+                  title={title}
+                  setTitle={setTitle}
+                  body={body}
+                  setBody={setBody}
                   submitForm={submitAddForm}
                   heading={"Add Posts"}
                   post={ePost}
@@ -143,10 +144,10 @@ function App() {
             element={
               <>
                 <Form
-                  title={editTitle}
-                  setTitle={setEditTitle}
-                  body={editBody}
-                  setBody={setEditBody}
+                  title={title}
+                  setTitle={setTitle}
+                  body={body}
+                  setBody={setBody}
                   open={ePost ? open : false}
                   setOpen={setOpen}
                   post={ePost}
