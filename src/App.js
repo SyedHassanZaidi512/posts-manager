@@ -10,7 +10,6 @@ import PostDetail from "./components/PostDetail";
 import AddList from "./components/AddList";
 import EditBox from "./components/EditBox";
 import AddPost from "./components/AddPost";
-import Form from "./components/Form";
 function App() {
   const [posts, setPosts] = useState("");
   const [showDetails, setShowDetails] = useState(false);
@@ -19,8 +18,7 @@ function App() {
   const [ePost, setEPost] = useState("");
   const [open, setOpen] = useState(false);
   const [addForm, setAddForm] = useState(false);
-  const [title,setTitle]=useState("")
-  const [body,setBody]=useState("")
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -133,16 +131,14 @@ function App() {
             path="addList"
             element={
               <>
-              <Form />
-                {/* <EditBox
+                <EditBox
                   open={open}
                   setOpen={setOpen}
                   submitForm={submitForm}
                   ePost={ePost}
-                /> */}
+                />
                 <AddList editPost={editPost} add={add} />
-                </>
-        
+              </>
             }
           />
         </Routes>
