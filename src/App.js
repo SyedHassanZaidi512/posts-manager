@@ -8,8 +8,6 @@ import { useEffect } from "react";
 import PostList from "./components/PostList";
 import PostDetail from "./components/PostDetail";
 import AddList from "./components/AddList";
-import EditBox from "./components/EditBox";
-import AddPost from "./components/AddPost";
 import Form from "./components/Form";
 function App() {
   const [posts, setPosts] = useState("");
@@ -19,8 +17,11 @@ function App() {
   const [ePost, setEPost] = useState("");
   const [open, setOpen] = useState(false);
   const [addForm, setAddForm] = useState(false);
-  const [title,setTitle]=useState("")
-  const [body,setBody]=useState("")
+  const [editTitle, setEditTitle] = useState("");
+  const [editBody, setEditBody] = useState("");
+  const [addTitle, setAddTitle] = useState("");
+  const [addBody, setAddBody] = useState("");
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -35,9 +36,10 @@ function App() {
   };
 
   const submitAddForm = (title, body) => {
-    console.log(title, "title");
     const post = { id: posts.length + 1, title: title, body: body };
     setPosts([...posts, post]);
+    setAddTitle("")
+    setAddBody("")
     setAddForm(false);
   };
 
@@ -113,11 +115,18 @@ function App() {
             path="/"
             element={
               <>
-                <AddPost
-                  submitAddForm={submitAddForm}
-                  addForm={addForm}
-                  setAddForm={setAddForm}
+                <Form
+                  open={addForm}
+                  setOpen={setAddForm}
+                  title={addTitle}
+                  setTitle={setAddTitle}
+                  body={addBody}
+                  setBody={setAddBody}
+                  submitForm={submitAddForm}
+                  heading={"Add Posts"}
+                  post={ePost}
                 />
+
                 {!showDetails && (
                   <PostList
                     posts={posts}
@@ -133,16 +142,19 @@ function App() {
             path="addList"
             element={
               <>
-              <Form />
-                {/* <EditBox
-                  open={open}
+                <Form
+                  title={editTitle}
+                  setTitle={setEditTitle}
+                  body={editBody}
+                  setBody={setEditBody}
+                  open={ePost ? open : false}
                   setOpen={setOpen}
+                  post={ePost}
                   submitForm={submitForm}
-                  ePost={ePost}
-                /> */}
+                  heading={"Edit Post"}
+                />
                 <AddList editPost={editPost} add={add} />
-                </>
-        
+              </>
             }
           />
         </Routes>

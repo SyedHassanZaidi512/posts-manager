@@ -5,8 +5,18 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-
-function Form({id,open,setOpen,submitForm,heading,title,setTitle,body,setBody}) {
+import { useEffect } from "react";
+function Form({post,open,setOpen,submitForm,heading,title,setTitle,body,setBody}) {
+   
+    
+  useEffect(() => {
+   if(post)
+   {
+    setTitle(post.title)
+    setBody(post.body)
+   }
+  }, [post])
+  
   return (
     <div>
         <Dialog key={open} open={open}>
@@ -38,7 +48,7 @@ function Form({id,open,setOpen,submitForm,heading,title,setTitle,body,setBody}) 
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={() => submitForm(title, body,id)}>
+          <Button onClick={() => submitForm(title, body,post.id)}>
             Submit
           </Button>
         </DialogActions>
