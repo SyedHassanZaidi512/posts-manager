@@ -18,7 +18,6 @@
   gap:2%;
 }
 
-
 .icons{
     display: flex;
     flex-direction: row;
@@ -26,11 +25,14 @@
     float: right;
     gap:30vw;
     align-items: center;
-    margin-right: 60vw;
 }
 
 .navbar{
   display: flex;
   flex-direction: column;
   gap:100vw;
+}
+
+h1{
+  padding: 200px;
 }

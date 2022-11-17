@@ -1,10 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import editSlice from './redux/editSlice';
-
+import postSlice from './redux/postSlice';
 
 export default configureStore({
   reducer: {
-    edit:editSlice
+    post:postSlice
   }
 })
 

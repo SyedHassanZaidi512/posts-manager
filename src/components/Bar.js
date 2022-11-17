@@ -5,11 +5,15 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import GradeRoundedIcon from "@mui/icons-material/GradeRounded";
 import IconButton from "@mui/material/IconButton";
-import Badge from '@mui/material/Badge';
+import Badge from "@mui/material/Badge";
 import { Link } from "react-router-dom";
-import Tooltip from '@mui/material/Tooltip';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-function Bar({ handleNav,length,addPost}) {
+import Tooltip from "@mui/material/Tooltip";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import { useSelector, useDispatch } from "react-redux";
+import { openAddForm } from "../redux/postSlice";
+function Bar() {
+  const dispatch = useDispatch();
+  const length = useSelector((state) => state.post.favouritePosts).length;
   return (
     <div className="navbar">
       <Box sx={{ flexGrow: 1 }}>
@@ -18,52 +22,47 @@ function Bar({ handleNav,length,addPost}) {
           component="nav"
           style={{ backgroundColor: "#FFFFFF" }}
         >
-          <Toolbar onClick={handleNav}>
-            <Link to="/" style={{textDecoration:'none'}}>
+          <Toolbar>
+            <Link to="/" style={{ textDecoration: "none" }}>
               <Tooltip title="Home">
-            <Typography
-              className="app-logo "
-              color="blue"
-              fontSize="35px"
-              fontWeight="bold"
-              marginLeft="5%"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Posts
-            </Typography>
-            </Tooltip>
+                <Typography
+                  className="app-logo "
+                  color="blue"
+                  fontSize="35px"
+                  fontWeight="bold"
+                  marginLeft="5%"
+                  sx={{ display: { xs: "none", sm: "block" } }}
+                >
+                  Posts
+                </Typography>
+              </Tooltip>
             </Link>
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
-                marginLeft: "80%",
-                gap:"20%"
+                marginLeft: "75%",
+                gap: "20%",
               }}
             >
-             <Link to="/addList">
+              <Link to="/favourite">
+                <IconButton size="large" aria-label="" color="default">
+                  <Tooltip disableFocusListener title="Added Posts">
+                    <Badge badgeContent={length} color="error">
+                      <GradeRoundedIcon />
+                    </Badge>
+                  </Tooltip>
+                </IconButton>
+              </Link>
               <IconButton
-                  size="large"
-                  aria-label="" 
-                  color="default"
-                >
-               <Tooltip disableFocusListener title="Added Posts" >   
-              <Badge badgeContent={length} color="error">
-              <GradeRoundedIcon />
-              </Badge> 
-               </Tooltip>
+                onClick={() => dispatch(openAddForm())}
+                size="large"
+                aria-label=""
+                color="default"
+              >
+                <Tooltip disableFocusListener title="Add new post">
+                  <PostAddIcon />
+                </Tooltip>
               </IconButton>
-              </Link>
-              <Link to="/">
-              <IconButton onClick={addPost}
-                  size="large"
-                  aria-label="" 
-                  color="default"
-                >
-               <Tooltip disableFocusListener title="Add new post" >   
-                 <PostAddIcon/>
-               </Tooltip>
-              </IconButton>
-              </Link>
             </Box>
           </Toolbar>
         </AppBar>

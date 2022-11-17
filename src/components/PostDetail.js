@@ -1,39 +1,82 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import Modal from "@mui/material/Modal";
+import { hideDetails } from "../redux/postSlice";
+import { useSelector, useDispatch } from "react-redux";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  height: 500,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+function PostDetail() {
+  const dispatch = useDispatch();
+  const show = useSelector((state) => state.post.showDetails);
+  const postData = useSelector((state) => state.post.postDetails);
 
-function PostDetail({ postDetail }) {
-  const Data = postDetail[0];
   return (
     <div className="postDetail">
-      <Card sx={{ maxWidth: 1000, marginTop: "20px" }}>
-        <CardActionArea>
-          <CardContent>
-            <Typography variant="h5">Title:</Typography>
-            <Typography marginBottom="1%">{Data.title}</Typography>
-            <Typography variant="h5">Detail:</Typography>
-            <Typography
-              marginBottom="1%"
-              variant="body2"
-              color="text.secondary"
-            >
-              {Data.body}
+      <div>
+        <Modal
+          open={show}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h5" component="h2">
+              Title
             </Typography>
-            <Typography variant="h5">Tags:</Typography>
-            {Data.tags && Data.tags.length > 0 ? (
-              Data.tags.map((tag) => (
-                <Typography key={tag} size="small" color="primary">
-                  #{tag}
-                </Typography>
-              ))
-            ) : (
-              <h5>no tags to show</h5>
-            )}
-          </CardContent>
-        </CardActionArea>
-      </Card>
+            <Typography
+              width="40vw"
+              height="2.5vw"
+              overflow="hidden !important"
+              textOverflow="ellipsis"
+              id="modal-modal-title"
+              variant="body1"
+            >
+              {postData.title}
+            </Typography>
+            <Typography
+              id="modal-modal-title"
+              variant="h5"
+              component="h2"
+              sx={{ mt: 2, marginTop: "5%" }}
+            >
+              Body
+            </Typography>
+            <Typography
+              width="40vw"
+              height="10vw"
+              overflow="hidden !important"
+              textOverflow="ellipsis"
+              id="modal-modal-title"
+              variant="body1"
+              sx={{ mt: 2, marginTop: "1%" }}
+            >
+              {postData.body}
+            </Typography>
+            <Button
+              sx={{
+                float: "right",
+                margin: "10%",
+                width: "50px",
+              }}
+              variant="text"
+              onClick={() => dispatch(hideDetails())}
+            >
+              close
+            </Button>
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 }
