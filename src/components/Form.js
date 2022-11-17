@@ -5,22 +5,62 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useEffect } from "react";
-function Form({post,open,setOpen,submitForm,heading,title,setTitle,body,setBody}) {
-   
-    
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { closeAddForm, addPosts, editPost } from "../redux/postSlice";
+function Form() {
+  const dispatch = useDispatch();
+
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const open = useSelector((state) => state.post.open);
+  const posts = useSelector((state) => state.post.posts);
+  const favouriteList = useSelector((state) => state.post.favouritePosts);
+  const post = useSelector((state) => state.post.postToEdit);
+
   useEffect(() => {
-   if(post)
-   {
-    setTitle(post.title)
-    setBody(post.body)
-   }
-  }, [post])
-  
+    if (post) {
+      setTitle(post.title);
+      setBody(post.body);
+    } else {
+      setTitle("");
+      setBody("");
+    }
+  }, [post]);
+
+  const submitForm = (title, body) => {
+    if (post) {  // to Edit post
+      const newArray = posts.map((element) => {
+        if (element.id === post.id) {
+          return { ...element, title: title, body: body };
+        } else {
+          return element;
+        }
+      });
+      const editFavouriteList = favouriteList.map((element) => {
+        if (element.id === post.id) {
+          return { ...element, title: title, body: body };
+        } else {
+          return element;
+        }
+      });
+      dispatch(editPost({ newArray, editFavouriteList }));
+      setTitle("");
+      setBody("");
+      dispatch(closeAddForm());
+    } else {   // to add Post
+      const newPost = { id: posts.length + 1, title: title, body: body };
+      dispatch(addPosts(newPost));
+      setTitle("");
+      setBody("");
+      dispatch(closeAddForm());
+    }
+  };
+
   return (
     <div>
-        <Dialog key={open} open={open}>
-        <DialogTitle>{heading}</DialogTitle>
+      <Dialog open={open}>
+        <DialogTitle>{post ? "Edit Psot" : "Add Post"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -33,7 +73,6 @@ function Form({post,open,setOpen,submitForm,heading,title,setTitle,body,setBody}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-
           <TextField
             autoFocus
             margin="dense"
@@ -47,14 +86,12 @@ function Form({post,open,setOpen,submitForm,heading,title,setTitle,body,setBody}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={() => submitForm(title, body,post.id)}>
-            Submit
-          </Button>
+          <Button onClick={() => dispatch(closeAddForm())}>Cancel</Button>
+          <Button onClick={() => submitForm(title, body)}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }
 
-export default Form
+export default Form;
