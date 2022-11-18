@@ -53,16 +53,21 @@ function Bar() {
                   </Tooltip>
                 </IconButton>
               </Link>
+              
+              <Link to="/">
               <IconButton
                 onClick={() => dispatch(openAddForm())}
                 size="large"
                 aria-label=""
                 color="default"
               >
+                 
                 <Tooltip disableFocusListener title="Add new post">
                   <PostAddIcon />
                 </Tooltip>
-              </IconButton>
+                </IconButton>
+              </Link>
+            
             </Box>
           </Toolbar>
         </AppBar>

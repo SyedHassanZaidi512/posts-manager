@@ -23,9 +23,10 @@ function PostDetail() {
   const postData = useSelector((state) => state.post.postDetails);
 
   return (
-    <div className="postDetail">
-      <div>
+    <div   onClick={() => dispatch(hideDetails())} className="postDetail">
+      <div >
         <Modal
+          onClose={dispatch(hideDetails)}
           open={show}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
